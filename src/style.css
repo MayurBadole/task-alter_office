@@ -1,0 +1,12 @@
+.custom-radio-input:checked ~ .custom-radio-icon {
+  content: url("../public/stateselected.svg");
+}
+
+.custom-radio-input:not(:checked):hover ~ .custom-radio-icon {
+  content: url("../public/StateHover.svg");
+}
+
+.focus-border-gray {
+  border-width: 3px;
+  border-color: black;
+}
