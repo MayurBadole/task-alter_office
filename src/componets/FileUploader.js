@@ -1,21 +1,27 @@
 import PropTypes from "prop-types";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import UnifiedImageComponent from "../pages/ProgressImg";
 
-const UploadModal = ({
+const FileUploader = ({
   toggleUploaderVisibility,
   setProfilePicture,
-  setLenght,
   handleSubmitImage,
   openCropModal,
   handleCropImages,
 }) => {
   const [dragActive, setDragActive] = useState(false);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(() => {
+    const savedImages = localStorage.getItem("uploadedImages");
+    return savedImages ? JSON.parse(savedImages) : [];
+  });
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageError, setImageError] = useState(false);
   const maxImages = 5;
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem("uploadedImages", JSON.stringify(images));
+  }, [images]);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -51,7 +57,6 @@ const UploadModal = ({
   };
 
   const uploadFiles = (files) => {
-    setLenght(images.length + files.length);
     if (images.length + files.length > maxImages) {
       setImageError(true);
       return;
@@ -69,7 +74,6 @@ const UploadModal = ({
         };
         setImages((prevImages) => [...prevImages, newImage]);
 
-        // Simulate upload progress
         const uploadInterval = setInterval(() => {
           setImages((prevImages) =>
             prevImages.map((img) =>
@@ -108,6 +112,8 @@ const UploadModal = ({
     setImages([]);
     setSelectedImage(null);
     setImageError(false);
+    localStorage.removeItem("uploadedImages");
+
     toggleUploaderVisibility();
   };
 
@@ -129,8 +135,12 @@ const UploadModal = ({
     handleSubmitImage();
     toggleUploaderVisibility();
     setProfilePicture(selectedImage.src);
+    localStorage.removeItem("uploadedImages");
   };
-
+  const handleClose = () => {
+    toggleUploaderVisibility();
+    localStorage.removeItem("uploadedImages");
+  };
   return (
     <div
       className={`w-max-width-xl-576px !m-[0] top-[180px] left-[480px] absolute rounded-border-radius-rounded-lg-8px bg-background-primary flex flex-col items-start justify-center py-padding-8-32px px-padding-6-24px box-border gap-[32px] max-w-full z-[3] mq450:left-[15px] mq450:top-[200px] mq450:w-[350px] mq975:left-[85px] ${
@@ -155,7 +165,7 @@ const UploadModal = ({
           </div>
           <div
             className="rounded-rounded1 flex flex-row items-center justify-center cursor-pointer "
-            onClick={toggleUploaderVisibility}
+            onClick={handleClose}
           >
             <img
               className="h-6 w-6 relative overflow-hidden shrink-0 "
@@ -273,9 +283,9 @@ const UploadModal = ({
   );
 };
 
-UploadModal.propTypes = {
+FileUploader.propTypes = {
   toggleUploaderVisibility: PropTypes.func.isRequired,
   setProfilePicture: PropTypes.func.isRequired,
 };
 
-export default UploadModal;
+export default FileUploader;

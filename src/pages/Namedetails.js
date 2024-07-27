@@ -5,12 +5,10 @@ import CropModal from "../componets/CropModel";
 
 const Namedetails = ({ handleSubmitImage }) => {
   const [isUploaderVisible, setIsUploaderVisible] = useState(false);
-  const [imageLenght, setLenght] = useState(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [iscropImages, setIscropImages] = useState(null);
   const [profilePicture, setProfilePicture] = useState("/avatar.svg");
   const toggleUploaderVisibility = () => {
-    setLenght(null);
     setIsUploaderVisible(!isUploaderVisible);
   };
 
@@ -20,18 +18,22 @@ const Namedetails = ({ handleSubmitImage }) => {
 
   const closeCropModal = () => {
     setIsCropModalOpen(false);
+    toggleUploaderVisibility();
+
   };
   const handleCropImages = (img) => {
     setIscropImages(img);
   };
+
+  const handleSubmit = () => {
+    setIsCropModalOpen(false);
+    toggleUploaderVisibility();
+  };
+
   return (
     <div
       className={`self-stretch flex flex-col items-start justify-start pt-0 px-padding-8-32px pb-padding-8-32px box-border gap-[24px] max-w-full z-[1] mt-[-99px] text-left text-base text-text-primary font-text-xl-20-normal mq450:h-[348px]
-         ${
-           isUploaderVisible && imageLenght >= 2
-             ? "h-[135vh] mq450:h-[250vh]"
-             : "none"
-         }`}
+         ${isUploaderVisible ? "h-[135vh] mq450:h-[250vh]" : "none"}`}
     >
       {(isUploaderVisible || isCropModalOpen) && (
         <section className="w-full h-full !m-[0] absolute top-[0px] right-[0px] bottom-[0px] left-[0px] flex flex-row items-start justify-start max-w-full z-[2]">
@@ -100,14 +102,17 @@ const Namedetails = ({ handleSubmitImage }) => {
         <FileUploader
           toggleUploaderVisibility={toggleUploaderVisibility}
           setProfilePicture={setProfilePicture}
-          setLenght={setLenght}
           handleSubmitImage={handleSubmitImage}
           openCropModal={openCropModal}
           handleCropImages={handleCropImages}
         />
       )}
       {isCropModalOpen && !isUploaderVisible && (
-        <CropModal image={iscropImages} onClose={closeCropModal} />
+        <CropModal
+          image={iscropImages}
+          onClose={closeCropModal}
+          onSubmit={handleSubmit}
+        />
       )}
     </div>
   );
