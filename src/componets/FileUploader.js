@@ -129,7 +129,7 @@ const FileUploader = ({
 
   return (
     <div
-      className={`w-max-width-xl-576px !m-[0] top-[180px] left-[480px] absolute rounded-border-radius-rounded-lg-8px bg-background-primary flex flex-col items-start justify-center py-padding-8-32px px-padding-6-24px box-border gap-[32px] max-w-full z-[3] mq450:left-[15px] mq450:top-[200px] mq450:w-[350px] mq975:left-[85px] ${
+      className={`w-max-width-xl-576px !m-[0] top-[180px] left-[480px] absolute rounded-border-radius-rounded-lg-8px bg-background-primary flex flex-col items-start justify-center py-padding-8-32px px-padding-6-24px box-border gap-[32px] max-w-full z-[3] mq450:left-[20px] mq450:top-[200px] mq450:w-[350px] mq975:left-[85px] ${
         dragActive ? "border-2 border-dashed border-primary" : ""
       }`}
       onDragEnter={handleDragEnter}
