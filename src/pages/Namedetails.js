@@ -91,7 +91,7 @@ const Namedetails = ({ handleSubmitImage }) => {
               <div className="relative leading-[28px] text-text-disabled inline-block min-w-[8px] mq450:text-xl mq450:leading-[22px] mq750:w-full mq750:h-2">
                 •
               </div>
-              <div className="relative leading-[28px] text-text-secondary inline-block min-w-[73px] mq450:text-xl mq450:leading-[22px]">
+              <div className="ml-3 relative leading-[28px] text-text-secondary inline-block min-w-[73px] mq450:text-xl mq450:leading-[22px]">
                 He/Him
               </div>
             </div>
