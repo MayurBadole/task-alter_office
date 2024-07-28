@@ -44,10 +44,8 @@ const CropModal = ({ onClose, image, onSubmit }) => {
 
   const handleSubmit = () => {
     handleCropConfirm();
-    if (croppedImage) {
-      onSubmit(croppedImage);
-      // console.log(croppedImage);
-    }
+    onSubmit(croppedImage);
+    console.log(croppedImage);
   };
 
   return (
@@ -72,9 +70,11 @@ const CropModal = ({ onClose, image, onSubmit }) => {
           </div>
         </div>
         <div className="self-stretch bg-background-primary-inverted flex flex-row items-start justify-start py-0 px-[51px] mq450:pl-5 mq450:pr-5 mq450:box-border">
-          <div className="h-[290px] flex-1 relative">
+          <div className="h-[290px] flex-1 relative flex justify-center items-center">
             <ReactCrop
               crop={crop}
+              circularCrop
+              keepSelection
               onChange={(_, percentCrop) => setCrop(percentCrop)}
               aspect={ASPECT_RATIO}
             >
@@ -82,7 +82,7 @@ const CropModal = ({ onClose, image, onSubmit }) => {
                 ref={imgRef}
                 src={image}
                 alt="To be cropped"
-                style={{ maxHeight: "70vh" }}
+                style={{ height: "200px", marginTop: "10px" }}
                 onLoad={handleImageLoad}
               />
             </ReactCrop>
